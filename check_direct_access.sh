@@ -1,33 +1,33 @@
 #!/bin/bash
 
-# Imperva WAF API endpoint and access token
-API_ENDPOINT="https://my.imperva.com/api/prov/v1"
-API_ID="00000" # /!\ To replace with your Imperva API ID
-API_KEY="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # /!\ To replace with your Imperva API Key 
-ACCOUNT_ID="0000000" # To replace with your Imperva WAF Account ID
+# Retrieve global environment variables stored in .env
+source .env
 
-TIMEOUT_DURATION="10"
+# Declare global variables for this script
+TIMEOUT_DURATION="10" # Time before a request is considered as a timeout (in seconds)
 
-# Step 1: List sites from the account
-echo "Retrieving sites from account ($ACCOUNT_ID)..."
-echo
+# Print ASCII art
+echo -e "\e[0;34m   ,---,          ____                                                                     .---.   ,---,           ,---,.\n,\`--.' |        ,'  , \`.,-.----.                                                          /. ./|  '  .' \        ,'  .' |\n|   :  :     ,-+-,.' _ |\    /  \             __  ,-.                                 .--'.  ' ; /  ;    '.    ,---.'   |\n:   |  '  ,-+-. ;   , |||   :    |          ,' ,'/ /|    .---.                       /__./ \ : |:  :       \   |   |   .'\n|   :  | ,--.'|'   |  |||   | .\ :   ,---.  '  | |' |  /.  ./|   ,--.--.         .--'.  '   \' .:  |   /\   \  :   :  :  \n'   '  ;|   |  ,', |  |,.   : |: |  /     \ |  |   ,'.-' . ' |  /       \       /___/ \ |    ' '|  :  ' ;.   : :   |  |-,\n|   |  ||   | /  | |--' |   |  \ : /    /  |'  :  / /___/ \: | .--.  .-. |      ;   \  \;      :|  |  ;/  \   \|   :  ;/|\n'   :  ;|   : |  | ,    |   : .  |.    ' / ||  | '  .   \  ' .  \__\/: . .       \   ;  \`      |'  :  | \  \ ,'|   |   .'\n|   |  '|   : |  |/     :     |\`-''   ;   /|;  : |   \   \   '  ,\" .--.; |        .   \    .\  ;|  |  '  '--'  '   :  '  \n'   :  ||   | |\`-'      :   : :   '   |  / ||  , ;    \   \    /  /  ,.  |         \   \   ' \ ||  :  :        |   |  |  \n;   |.' |   ;/          |   | :   |   :    | ---'      \   \ |;  :   .'   \\         :   '  |--\" |  | ,'        |   :  \  \n'---'   '---'           \`---'.|    \   \  /             '---\" |  ,     .-./          \   \ ;    \`--''          |   | ,'  \n                          \`---\`     \`----'                     \`--\`---'               '---\"                    \`----'    \e[0m\n"
 
-# Make the API request to list sites
+# List websites from Imperva account
+echo -e "Retrieving websites from Imperva account (\e[1;30m$ACCOUNT_ID\e[0m)...\n"
+
+# Make an Imperva API request to list account websites
 response=$(curl -s -X POST -H "accept: application/json" "$API_ENDPOINT/sites/list?api_id=$API_ID&api_key=$API_KEY&account_id=$ACCOUNT_ID")
 
-# Iterate through the sites
+# Iterate through the websites
 echo "$response" | jq -c '.sites[]' | while IFS=$'\t' read -r site; do
-  # Initialize the values
-  origin_ip_accessible=false
-  waf_ip_accessible=false
+  # Initialize local values
+  origin_ip_accessible=false # Boolean to check if the website is directly accessible
+  waf_ip_accessible=false # Boolean to check if the website is accessible through Imperva WAF
 
-  # Extract the fields
-  domain=$(echo "$site" | jq -r ".domain")
-  account_id=$(echo "$site" | jq -r ".account_id")
-  ips=$(echo "$site" | jq -r ".ips[]" | tr '\n' ' ')
-  dns=$(echo "$site" | jq -r ".dns[].set_data_to[]" | tr '\n' ' ')
-  original_dns=$(echo "$site" | jq -r ".original_dns[].set_data_to[]" | tr "\n" " ")
-  display_name=$(echo "$site" | jq -r ".display_name")
+  # Extract the fields from the API response
+  domain=$(echo "$site" | jq -r ".domain") # The account domain
+  account_id=$(echo "$site" | jq -r ".account_id") # The Imperva account ID
+  ips=$(echo "$site" | jq -r ".ips[]" | tr '\n' ' ') # The original IP for the account
+  dns=$(echo "$site" | jq -r ".dns[].set_data_to[]" | tr '\n' ' ') # The current DNS record
+  original_dns=$(echo "$site" | jq -r ".original_dns[].set_data_to[]" | tr "\n" " ") # The original DNS response for the account
+  display_name=$(echo "$site" | jq -r ".display_name") # The Imperva account display name
 
   echo -e "  (\e[1m$account_id\e[0m) \e[1m$domain\e[0m"
 
@@ -36,7 +36,7 @@ echo "$response" | jq -c '.sites[]' | while IFS=$'\t' read -r site; do
   # Split ips into an array
   IFS=" " read -r -a ips_array <<< "$ips"
 
-  # Loop through each IP or CNAME in dns
+  # Iterate through each IP or CNAME in DNS
   for entry in $original_dns; do
     # Check if the entry is an IP address
     if [[ $entry =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -67,7 +67,7 @@ echo "$response" | jq -c '.sites[]' | while IFS=$'\t' read -r site; do
       echo -e "        \e[31m❗\e[0m Origin IP \e[2m${ip}\e[0m is directly accessible (\e[2mHTTP_CODE $result\e[0m)."
       origin_ip_accessible=true
     else
-      echo -e "        \e[32m✅\e[0m Origin IP \e[2m${ip}\e[0m is not directly accessible (\e[2mHTTP_CODE $result\e[0m)."
+      echo -e "        \e[32m✅\e[0m Origin IP \e[2m${ip}\e[0m is not directly accessible (\e[2mHTTP_CODE $result\e[0m)." 
     fi
   done
 
@@ -79,7 +79,7 @@ echo "$response" | jq -c '.sites[]' | while IFS=$'\t' read -r site; do
   # Split waf_ip into an array
   IFS=" " read -r -a waf_ip_array <<< "$waf_ips"
 
-  # Loop through each IP or CNAME in dns
+  # Iterate through each IP or CNAME in dns
   for entry in $dns; do
     # Check if the entry is an IP address
     if [[ $entry =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
