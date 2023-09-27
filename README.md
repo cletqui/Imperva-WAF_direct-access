@@ -6,8 +6,8 @@ Imperva-WAF_direct-access is a project designed to help you check whether the ba
 
 ## Features
 
-- Check if backend servers are accessible without the WAF.
-- Support for multiple URLs.
+- Check if backend servers are directly accessible without the WAF.
+- Option to extract only the websites names (to see exactly what sites are secured by your WAF).
 - User-friendly and easy to run.
 
 ## Installation
@@ -30,29 +30,75 @@ Imperva-WAF_direct-access is a project designed to help you check whether the ba
    chmod +x check_direct_access.sh
    ```
 
+## Imperva API Setup
+
+To use this repository with Imperva API, you need to create a `.env` file in the project directory with the following credentials:
+
+1. **API Endpoint**:
+   Set the API endpoint URL as follows:
+
+     ```plaintext
+     API_ENDPOINT="https://my.imperva.com/api/prov/v1"
+     ```
+
+2. **API Credentials**:
+   Provide your Imperva API credentials:
+     - API_ID: Your API ID
+     - API_KEY: Your API Key
+
+     ```plaintext
+     API_ID=00000
+     API_KEY="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+     ```
+
+3. **Account ID**:
+   Specify your Imperva Account ID:
+
+     ```plaintext
+     ACCOUNT_ID=0000000
+     ```
+
+Ensure that you replace the placeholder values with your actual Imperva API information. Keep this `.env` file secure and do not share it publicly. It is explicitely excluded in `.gitignore`.
+
+
 ## Usage
 
-To check whether the backend is accessible without the WAF for a single URL:
+To use this script, you can run it from the command line with the following options:
 
 ```bash
-./check_direct_access.sh https://example.com
+./check_direct_access.sh [OPTIONS]
 ```
 
-To check multiple URLs, create a text file with one URL per line (e.g., `urls.txt`), and then run:
+Remember to replace the option values with your specific choices and ensure that you have created a .env file with your Imperva API credentials as explained in the previous section.
 
-```bash
-./check_direct_access.sh -f urls.txt
-```
+### Options:
 
-## Example
+- `-v, --verbose`: Enable verbose mode.
+- `-o, --output FILE.txt`: Specify the output file with a .txt extension.
+- `-t, --timeout SECONDS`: Specify the timeout in seconds (positive integer).
+- `--websites-only`: List only websites, no check is performed.
+- `--env FILE`: Specify the path to a .env file for environment variables.
+- `-h, --help`: Display this help message.
 
-```bash
-$ ./check_direct_access.sh https://example.com
+### Examples:
 
-Checking direct access for URL: https://example.com
-Direct access is not allowed. WAF protection is active.
+1. **Basic Usage**:
 
-```
+   ```bash
+   ./check_direct_access.sh -v -o output.txt -t 10 --env .env
+   ```
+
+2. **Minimum Usage**:
+
+   ```bash
+   ./check_direct_access.sh
+   ```
+
+3. **Display Help**:
+
+   ```bash
+   ./check_direct_access.sh -h
+   ```
 
 ## License
 
@@ -73,7 +119,7 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ## Roadmap
 
-- [ ] Add support for custom WAF IP addresses.
+- [ ] Add option to test only selected websites
 - [ ] Improve user interface and error handling.
 - [ ] Add additional security checks.
 
