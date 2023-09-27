@@ -2,7 +2,7 @@
 
 ## Description
 
-Imperva-WAF_direct-access is a project designed to help you check whether the backend of your websites behind an Imperva Web Application Firewall (WAF) is directly accessible without going through the WAF. This can be a valuable security measure to ensure that traffic is routed through your WAF as intended.
+Imperva-WAF_direct-access is a project designed to help you check whether the backend of your websites behind an Imperva Web Application Firewall ([WAF](https://www.imperva.com/products/web-application-firewall-waf/)) is directly accessible without going through the WAF. This can be a valuable security measure to ensure that traffic is routed through your WAF as recommended (c.f. [Imperva Documentation](https://www.imperva.com/blog/how-to-maximize-your-waf/)).
 
 ## Features
 
