@@ -6,16 +6,21 @@ Imperva-WAF_direct-access is a project designed to help you check whether the ba
 
 ## Table of Contents
 
-- [Features](#features)
-- [Installation](#installation)
-- [Imperva API Setup](#imperva-api-setup)
-- [Usage](#usage)
-- [Acknowledgments](#acknowledgments)
-- [Roadmap](#roadmap)
-- [Support](#support)
-- [Contributing](#contributing)
-- [License](#license)
-- [Project Status](#project-status)
+- [Imperva-WAF_direct-access](#imperva-waf_direct-access)
+   - [Description](#description)
+   - [Table of Contents](#table-of-contents)
+   - [Features](#features)
+   - [Installation](#installation)
+   - [Imperva API Setup](#imperva-api-setup)
+   - [Usage](#usage)
+      - [Options](#options)
+      - [Examples](#examples)
+   - [Acknowledgments](#acknowledgments)
+   - [Roadmap](#roadmap)
+   - [Support](#support)
+   - [Contributing](#contributing)
+   - [License](#license)
+   - [Project Status](#project-status)
 
 ## Features
 
