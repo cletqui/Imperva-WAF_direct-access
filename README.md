@@ -4,6 +4,19 @@
 
 Imperva-WAF_direct-access is a project designed to help you check whether the backend of your websites behind an Imperva Web Application Firewall ([WAF](https://www.imperva.com/products/web-application-firewall-waf/)) is directly accessible without going through the WAF. This can be a valuable security measure to ensure that traffic is routed through your WAF as recommended (c.f. [Imperva Documentation](https://www.imperva.com/blog/how-to-maximize-your-waf/)).
 
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Imperva API Setup](#imperva-api-setup)
+- [Usage](#usage)
+- [Acknowledgments](#acknowledgments)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [Contributing](#contributing)
+- [License](#license)
+- [Project Status](#project-status)
+
 ## Features
 
 - Check if backend servers are directly accessible without the WAF.
@@ -100,14 +113,16 @@ Remember to replace the option values with your specific choices and ensure that
    ./check_direct_access.sh -h
    ```
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - [Imperva](https://www.imperva.com/) for their Web Application Firewall technology.
 - Contributors: List any contributors here.
+
+## Roadmap
+
+- [ ] Add option to test only selected websites
+- [ ] Improve user interface and error handling.
+- [ ] Add additional security checks.
 
 ## Support
 
@@ -117,11 +132,9 @@ If you have any questions or encounter issues, please open an [issue](https://gi
 
 Contributions are welcome! Feel free to open an issue or submit a pull request.
 
-## Roadmap
+## License
 
-- [ ] Add option to test only selected websites
-- [ ] Improve user interface and error handling.
-- [ ] Add additional security checks.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Project Status
 
