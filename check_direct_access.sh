@@ -114,7 +114,8 @@ fi
 log() {
   local message="$1"                       # Message to log
   echo -en "${message}"                    # Echo to the terminal
-  echo -en "${message}" >>"${output_file}" # Write to the output file
+  local sanitized_message="$(echo -e "$message" | sed -r "s/\x1B\[[0-9;]*[mK]//g")" # Sanitize the message (remove ANSI color codes but not \n) for logging to the file
+  echo -e "$sanitized_message" >> "$output_file" # Write to the output file
 }
 
 # If websitest only option enabled, only print the websites names
