@@ -6,21 +6,21 @@ Imperva-WAF_direct-access is a project designed to help you check whether the ba
 
 ## Table of Contents
 
-- [Imperva-WAF_direct-access](#imperva-waf_direct-access)
-   - [Description](#description)
-   - [Table of Contents](#table-of-contents)
-   - [Features](#features)
-   - [Installation](#installation)
-   - [Imperva API Setup](#imperva-api-setup)
-   - [Usage](#usage)
-      - [Options](#options)
-      - [Examples](#examples)
-   - [Acknowledgments](#acknowledgments)
-   - [Roadmap](#roadmap)
-   - [Support](#support)
-   - [Contributing](#contributing)
-   - [License](#license)
-   - [Project Status](#project-status)
+- [Imperva-WAF\_direct-access](#imperva-waf_direct-access)
+  - [Description](#description)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Imperva API Setup](#imperva-api-setup)
+  - [Usage](#usage)
+    - [Options](#options)
+    - [Examples](#examples)
+  - [Acknowledgments](#acknowledgments)
+  - [Roadmap](#roadmap)
+  - [Support](#support)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Project Status](#project-status)
 
 ## Features
 
@@ -55,29 +55,29 @@ To use this repository with Imperva API, you need to create a `.env` file in the
 1. **API Endpoint**:
    Set the API endpoint URL as follows:
 
-     ```plaintext
-     API_ENDPOINT="https://my.imperva.com/api/prov/v1"
-     ```
+   ```plaintext
+   API_ENDPOINT="https://my.imperva.com/api/prov/v1"
+   ```
 
 2. **API Credentials**:
    Provide your Imperva API credentials:
-     - API_ID: Your API ID
-     - API_KEY: Your API Key
 
-     ```plaintext
-     API_ID=00000
-     API_KEY="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-     ```
+   - API_ID: Your API ID
+   - API_KEY: Your API Key
+
+   ```plaintext
+   API_ID=00000
+   API_KEY="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+   ```
 
 3. **Account ID**:
    Specify your Imperva Account ID:
 
-     ```plaintext
-     ACCOUNT_ID=0000000
-     ```
+   ```plaintext
+   ACCOUNT_ID=0000000
+   ```
 
 Ensure that you replace the placeholder values with your actual Imperva API information. Keep this `.env` file secure and do not share it publicly. It is explicitely excluded in `.gitignore`.
-
 
 ## Usage
 
@@ -89,7 +89,7 @@ To use this script, you can run it from the command line with the following opti
 
 Remember to replace the option values with your specific choices and ensure that you have created a .env file with your Imperva API credentials as explained in the previous section.
 
-### Options:
+### Options
 
 - `-v, --verbose`: Enable verbose mode.
 - `-o, --output FILE.txt`: Specify the output file with a .txt extension.
@@ -98,7 +98,7 @@ Remember to replace the option values with your specific choices and ensure that
 - `--env FILE`: Specify the path to a .env file for environment variables.
 - `-h, --help`: Display this help message.
 
-### Examples:
+### Examples
 
 1. **Basic Usage**:
 
