@@ -14,76 +14,61 @@ print_help() {
 }
 
 # Declare local variables for this script
-verbose=false       # Verbose mode option
-output_file=""      # Output file path variable
-websites_only=false # Websites-only option
-timeout=10          # Default timeout value if not provided
-env_file=".env"     # Environment file path variable
+declare -A options=(
+  [verbose]=false       # Verbose mode option
+  [output_file]=""      # Output file path variable
+  [websites_only]=false # Websites-only option
+  [timeout]=10          # Default timeout value if not provided
+  [env_file]=".env"     # Environment file path variable
+)
 
 # Declare local variables for printing output
-RESET="\e[0m"   # Reset text color
-GREY="\e[2m"    # Grey text color
-RED="\e[31m"    # Red text color
-GREEN="\e[32m"  # Green text color
-YELLOW="\e[33m" # Yellow text color
-BLUE="\e[34m"   # Blue text color
-BOLD="\e[1m"    # Bold text
+declare -A colors=(
+  [reset]="\e[0m"
+  [grey]="\e[2m"
+  [red]="\e[31m"
+  [green]="\e[32m"
+  [yellow]="\e[33m"
+  [blue]="\e[34m"
+  [bold]="\e[1m"
+)
 
 # Parse environment variables from .env file if provided
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-  -v | --verbose)
-    verbose=true
-    shift
-    ;;
-  -o | --output)
-    if [[ -n "$2" ]]; then
-      # Check if the output file has a .txt extension
-      if [[ "$2" == *.txt ]]; then
-        output_file="$2"
-        shift 2
-      else
-        echo "Error: Output file must have a .txt extension" >&2
-        exit 1
-      fi
-    else
-      echo "Error: Missing argument for $1" >&2
+while getopts ":v:o:t:h-:" opt; do
+  case "$opt" in
+  v) options[verbose]=true ;;
+  o) options[output_file]=$OPTARG ;;
+  t) options[timeout]=$OPTARG ;;
+  h) print_help ;;
+  -)
+    case "${OPTARG}" in
+    verbose) options[verbose]=true ;;
+    output)
+      options[output_file]="${!OPTIND}"
+      OPTIND=$((OPTIND + 1))
+      ;;
+    timeout)
+      options[timeout]="${!OPTIND}"
+      OPTIND=$((OPTIND + 1))
+      ;;
+    websites-only) options[websites_only]=true ;;
+    env)
+      options[env_file]="${!OPTIND}"
+      OPTIND=$((OPTIND + 1))
+      ;;
+    help) print_help ;;
+    *)
+      echo "Error: Unknown option --${OPTARG}" >&2
       exit 1
-    fi
+      ;;
+    esac
     ;;
-  -t | --timeout)
-    if [[ -n "$2" && "$2" =~ ^[0-9]+$ ]]; then
-      timeout="$2"
-      shift 2
-    else
-      echo "Error: Timeout must be a positive integer" >&2
-      exit 1
-    fi
+  \?)
+    echo "Error: Unknown option -${OPTARG}" >&2
+    exit 1
     ;;
-  --websites-only)
-    websites_only=true
-    shift
-    ;;
-  --env)
-    if [[ -n "$2" ]]; then
-      if [[ -f "$2" ]]; then
-        env_file="$2"
-        shift 2
-      else
-        echo "Error: .env file not found at the specified path: $2" >&2
-        exit 1
-      fi
-    else
-      echo "Error: Missing argument for $1" >&2
-      exit 1
-    fi
-    ;;
-  -h | --help)
-    print_help
-    ;;
-  *)
-    echo "Error: Unknown option $1" >&2
-    print_help
+  :)
+    echo "Error: Missing argument for -${OPTARG}" >&2
     exit 1
     ;;
   esac
@@ -112,10 +97,10 @@ fi
 
 # Echo and write text to output file
 log() {
-  local message="$1"                                                                # Message to log
-  echo -en "${message}"                                                             # Echo to the terminal
-  local sanitized_message="$(echo -e "$message" | sed -r "s/\x1B\[[0-9;]*[mK]//g")" # Sanitize the message (remove ANSI color codes but not \n) for logging to the file
-  echo -e "$sanitized_message" >>"$output_file"                                     # Write to the output file
+  local message="$1"
+  local color="${2:-reset}"
+  echo -en "${colors[$color]}${message}${colors[reset]}"
+  echo -e "$message" >>"${options[output_file]}"
 }
 
 # If websitest only option enabled, only print the websites names
