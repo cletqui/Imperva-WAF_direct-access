@@ -25,7 +25,7 @@ Imperva-WAF_direct-access is a project designed to help you check whether the ba
 ## Features
 
 - Check if backend servers are directly accessible without the WAF.
-- Option to extract only the websites names (to see exactly what sites are secured by your WAF).
+- Option to list only the websites names (to see exactly what sites are secured by your WAF).
 - User-friendly and easy to run.
 
 ## Installation
@@ -42,12 +42,6 @@ Imperva-WAF_direct-access is a project designed to help you check whether the ba
    cd Imperva-WAF_direct-access
    ```
 
-3. Make the script executable:
-
-   ```bash
-   chmod +x check_direct_access.sh
-   ```
-
 ## Imperva API Setup
 
 To use this repository with Imperva API, you need to create a `.env` file in the project directory with the following credentials:
@@ -56,7 +50,7 @@ To use this repository with Imperva API, you need to create a `.env` file in the
    Set the API endpoint URL as follows:
 
    ```plaintext
-   API_ENDPOINT="https://my.imperva.com/api/prov/v1"
+   API_ENDPOINT="https://my.imperva.com/api/prov/v1/sites/list"
    ```
 
 2. **API Credentials**:
@@ -84,17 +78,17 @@ Ensure that you replace the placeholder values with your actual Imperva API info
 To use this script, you can run it from the command line with the following options:
 
 ```bash
-./check_direct_access.sh [OPTIONS]
+python check.py [OPTIONS]
 ```
 
-Remember to replace the option values with your specific choices and ensure that you have created a .env file with your Imperva API credentials as explained in the previous section.
+Remember to replace the option values with your specific choices and ensure that you have created a `.env` file with your Imperva API credentials as explained in the previous section.
 
 ### Options
 
 - `-v, --verbose`: Enable verbose mode.
 - `-o, --output FILE.txt`: Specify the output file with a .txt extension.
 - `-t, --timeout SECONDS`: Specify the timeout in seconds (positive integer).
-- `--websites-only`: List only websites, no check is performed.
+- `-l, --list-only`: List only websites, no check is performed.
 - `--env FILE`: Specify the path to a .env file for environment variables.
 - `-h, --help`: Display this help message.
 
@@ -103,19 +97,19 @@ Remember to replace the option values with your specific choices and ensure that
 1. **Basic Usage**:
 
    ```bash
-   ./check_direct_access.sh -v -o output.txt -t 10 --env .env
+   python check.py -v -o output.txt -t 10 --env .env
    ```
 
 2. **Minimum Usage**:
 
    ```bash
-   ./check_direct_access.sh
+   python check.py
    ```
 
 3. **Display Help**:
 
    ```bash
-   ./check_direct_access.sh -h
+   python check.py -h
    ```
 
 ## Acknowledgments
