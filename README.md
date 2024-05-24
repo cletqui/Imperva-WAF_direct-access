@@ -74,6 +74,7 @@ Remember to replace the option values with your specific choices and ensure that
 ### Options:
 
 - `-v, --verbose`: Enable verbose mode.
+- `-a, --all`: Include all websites (only unsafe websites by default).
 - `-o, --output FILE.txt`: Specify the output file with a .txt extension.
 - `-t, --timeout SECONDS`: Specify the timeout in seconds (positive integer).
 - `--websites-only`: List only websites, no check is performed.
@@ -85,7 +86,7 @@ Remember to replace the option values with your specific choices and ensure that
 1. **Basic Usage**:
 
    ```bash
-   ./check_direct_access.sh -v -o output.txt -t 10 --env .env
+   ./check_direct_access.sh -v -a -o output.txt -t 10 --env .env
    ```
 
 2. **Minimum Usage**:
@@ -119,6 +120,7 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ## Roadmap
 
+- [x] Return data in JSON.
 - [ ] Add option to test only selected websites
 - [ ] Improve user interface and error handling.
 - [ ] Add additional security checks.
