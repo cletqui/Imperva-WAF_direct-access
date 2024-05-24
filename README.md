@@ -91,12 +91,12 @@ Remember to replace the option values with your specific choices and ensure that
 
 ### Options
 
-- `-v, --verbose`: Enable verbose mode.
+- `-v, --verbose`: Enable verbose mode (log it into logs.txt).
 - `-a, --all`: Include all websites (only unsafe websites by default).
-- `-o, --output FILE.txt`: Specify the output file with a .txt extension.
-- `-t, --timeout SECONDS`: Specify the timeout in seconds (positive integer).
-- `-l, --list-only`: List only websites, no check is performed.
-- `--env FILE`: Specify the path to a .env file for environment variables.
+- `-o, --output <file>`: Specify the output file (with a .json extension).
+- `-t, --timeout <timeout>`: Specify the timeout in seconds (positive integer).
+- `-l, --list-only`: List only websites (no check is performed).
+- `-e, --env <file>`: Specify the path to a .env file for environment variables.
 - `-h, --help`: Display this help message.
 
 ### Examples
@@ -104,7 +104,7 @@ Remember to replace the option values with your specific choices and ensure that
 1. **Basic Usage**:
 
    ```bash
-   ./check_direct_access.sh -v -a -o output.txt -t 10 --env .env
+   ./check_direct_access.sh -v -a -o output.json -t 10 -e .env
    ```
 
 2. **Minimum Usage**:
