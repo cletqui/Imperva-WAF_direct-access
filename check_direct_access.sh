@@ -4,7 +4,7 @@
 print_help() {
   echo "Usage: ./check_direct_access.sh [OPTIONS]"
   echo "Options:"
-  echo "  -v, --verbose             Enable verbose mode (logs it into logs.txt)"
+  echo "  -v, --verbose             Enable verbose mode (log it into logs.txt)"
   echo "  -a, --all                 Print all websites (only unsafe websites by default)"
   echo "  -o, --output <file>.json  Specify the output file (with a .json extension)"
   echo "  -t, --timeout <timeout>   Specify the timeout in seconds (positive integer)"
